@@ -1,18 +1,16 @@
+import random
 from fastapi import FastAPI, HTTPException
 
-app = FastAPI(title="Cadastro Mock API")
+app = FastAPI(title="BACEN Mock API")
 
-FAKE_CLIENTES = {
-    "1": {"nome": "João Silva", "conta_ativa": True},
-    "2": {"nome": "Maria Souza", "conta_ativa": False},
-    "3": {"nome": "Carlos Alberto", "conta_ativa": True},
-}
+RATE_LIMIT_PROBABILITY = 0.15
 
-@app.get("/cliente/{cliente_id}")
-def get_cliente(cliente_id: str):
-    cliente = FAKE_CLIENTES.get(cliente_id)
+@app.post("/notificar")
+def notificar(payload: dict):
+    if random.random() < RATE_LIMIT_PROBABILITY:
+        raise HTTPException(status_code=429, detail="Rate limit exceeded")
 
-    if not cliente:
-        raise HTTPException(status_code=404, detail="Cliente não encontrado")
-
-    return cliente
+    return {
+        "status": "OK",
+        "transacao": payload.get("transacao_id", "N/A")
+    }
