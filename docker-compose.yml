@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  cadastro-mock:
+    build: ./mocks/cadastro-mock
+    ports:
+      - "8001:8001"
+
+  bacen-mock:
+    build: ./mocks/bacen-mock
+    ports:
+      - "8002:8002"
