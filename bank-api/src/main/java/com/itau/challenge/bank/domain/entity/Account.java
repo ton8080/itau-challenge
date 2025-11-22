@@ -1,7 +1,6 @@
 package com.itau.challenge.bank.domain.entity;
 
 import java.math.BigDecimal;
-import java.util.Objects;
 
 public record Account(String id,
                       String accountNumber,
@@ -11,8 +10,6 @@ public record Account(String id,
                       String customerName) {
 
     public Account {
-        Objects.requireNonNull(id);
-        Objects.requireNonNull(accountNumber);
         if (balance == null) balance = BigDecimal.ZERO;
         if (dailyTransferred == null) dailyTransferred = BigDecimal.ZERO;
     }

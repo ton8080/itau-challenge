@@ -3,9 +3,9 @@ from fastapi import FastAPI, HTTPException
 app = FastAPI(title="Cadastro Mock API")
 
 FAKE_CUSTOMERS = {
-    "1": {"nome": "João Silva"},
-    "2": {"nome": "Maria Souza"},
-    "3": {"nome": "Carlos Alberto"},
+    "1": {"name": "João Silva", "active_account": True},
+    "2": {"name": "Maria Souza", "active_account": False},
+    "3": {"name": "Carlos Alberto", "active_account": True},
 }
 
 @app.get("/customer/{customer_id}")
