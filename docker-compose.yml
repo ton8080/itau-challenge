@@ -10,3 +10,13 @@ services:
     build: ./mocks/bacen-mock
     ports:
       - "8002:8002"
+
+#  bank-api:
+#    build: ./bank-api
+#    ports:
+#      - "8003:8003"
+#    environment:
+#      - JAVA_TOOL_OPTIONS=-Xmx512m
+#    depends_on:
+#      - cadastro-mock
+#      - bacen-mock

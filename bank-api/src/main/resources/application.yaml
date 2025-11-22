@@ -1,3 +1,15 @@
+server:
+  port: 8003
+  servlet:
+    context-path: /bank-api
+
 spring:
   application:
     name: bank-api
+
+
+cadastro:
+    api:
+      path:
+        customerById: /customer/{customer_id}
+      host: http://localhost:8001

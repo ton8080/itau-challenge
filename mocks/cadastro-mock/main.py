@@ -2,18 +2,18 @@ from fastapi import FastAPI, HTTPException
 
 app = FastAPI(title="Cadastro Mock API")
 
-FAKE_CLIENTES = {
-    "1": {"nome": "João Silva", "conta_ativa": True},
-    "2": {"nome": "Maria Souza", "conta_ativa": False},
-    "3": {"nome": "Carlos Alberto", "conta_ativa": True},
+FAKE_CUSTOMERS = {
+    "1": {"nome": "João Silva"},
+    "2": {"nome": "Maria Souza"},
+    "3": {"nome": "Carlos Alberto"},
 }
 
-@app.get("/cliente/{cliente_id}")
-def get_cliente(cliente_id: str):
-    cliente = FAKE_CLIENTES.get(cliente_id)
+@app.get("/customer/{customer_id}")
+def get_customer(customer_id: str):
+    customer = FAKE_CUSTOMERS.get(customer_id)
 
-    if not cliente:
-        raise HTTPException(status_code=404, detail="Cliente não encontrado")
+    if not customer:
+        raise HTTPException(status_code=404, detail="Customer not found")
 
-    return cliente
+    return customer
 
