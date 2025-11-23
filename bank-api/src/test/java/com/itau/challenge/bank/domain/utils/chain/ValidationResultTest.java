@@ -1,5 +1,6 @@
-package com.itau.challenge.bank.domain.utils.validator;
+package com.itau.challenge.bank.domain.utils.chain;
 
+import com.itau.challenge.bank.domain.utils.chain.validator.ValidationResult;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

@@ -1,6 +1,8 @@
-package com.itau.challenge.bank.domain.utils.validator;
+package com.itau.challenge.bank.domain.utils.chain.validator.impl;
 
 import com.itau.challenge.bank.domain.entity.Account;
+import com.itau.challenge.bank.domain.utils.chain.validator.TransferValidator;
+import com.itau.challenge.bank.domain.utils.chain.validator.ValidationResult;
 
 import java.math.BigDecimal;
 

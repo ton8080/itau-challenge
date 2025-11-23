@@ -7,7 +7,8 @@ import com.itau.challenge.bank.domain.exceptions.AccountNotFoundException;
 import com.itau.challenge.bank.domain.exceptions.InvalidAmountException;
 import com.itau.challenge.bank.domain.exceptions.ValidationException;
 import com.itau.challenge.bank.domain.provider.*;
-import com.itau.challenge.bank.domain.utils.validator.*;
+import com.itau.challenge.bank.domain.utils.chain.validator.*;
+import com.itau.challenge.bank.domain.utils.chain.validator.impl.*;
 
 import java.math.BigDecimal;
 import java.util.UUID;

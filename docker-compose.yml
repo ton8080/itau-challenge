@@ -49,6 +49,22 @@ services:
     build: ./bank-api
     environment:
       SPRING_PROFILES_ACTIVE: local
+      SQS_ENDPOINT: http://localstack:4566
+      DB_URL: jdbc:postgresql://postgres:5432/bankdb
+      DB_USER: itau
+      DB_PASS: itau
+      MAX_POOL_SIZE: 50
+      MAX_IDLE: 10
+      CONN_TIMEOUT: 30000
+      IDLE_TIMEOUT: 600000
+      MAX_LIFE_TIME: 1800000
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_TIMEOUT: 2000
+      SQS_BACEN_QUEUE_NAM: bacen-notification-queue
+      CADASTRO_HOST: http://cadastro-mock:8001
+      BACEN_HOST: http://bacen-mock:8002
+
     networks: [itau-net]
     depends_on:
       - cadastro-mock
