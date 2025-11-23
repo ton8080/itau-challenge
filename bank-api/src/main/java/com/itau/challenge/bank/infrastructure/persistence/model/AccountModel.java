@@ -1,44 +1,50 @@
-package com.itau.challenge.bank.domain.entity;
+package com.itau.challenge.bank.infrastructure.persistence.model;
+
+
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 
-public class Account {
+@Entity
+@Table(name = "accounts")
+public class AccountModel {
 
+    @Id
+    @GeneratedValue
     private UUID id;
+
+    @Column(name = "account_number", nullable = false, unique = true)
     private String accountNumber;
+
+    @Column(name = "active_account")
     private boolean activeAccount;
-    private BigDecimal balance;
-    private BigDecimal dailyTransferred;
+
+    @Column(name = "balance", nullable = false)
+    private BigDecimal balance = BigDecimal.ZERO;
+
+    @Column(name = "daily_transferred", nullable = false)
+    private BigDecimal dailyTransferred = BigDecimal.ZERO;
+
+    @Column(name = "customer_name")
     private String customerName;
+
+    @Column(name = "daily_reset", nullable = false)
     private LocalDate lastDailyReset;
 
-    public Account(UUID id,
-                   String accountNumber,
-                   boolean active,
-                   BigDecimal balance,
-                   BigDecimal dailyTransferred,
-                   String customerName) {
+    public AccountModel() {
+    }
+
+    public AccountModel(UUID id, String accountNumber, boolean activeAccount, BigDecimal balance, BigDecimal dailyTransferred, String customerName, LocalDate lastDailyReset) {
         this.id = id;
         this.accountNumber = accountNumber;
-        this.activeAccount = active;
-        this.balance = balance == null ? BigDecimal.ZERO : balance;
-        this.dailyTransferred = dailyTransferred == null ? BigDecimal.ZERO : dailyTransferred;
+        this.activeAccount = activeAccount;
+        this.balance = balance;
+        this.dailyTransferred = dailyTransferred;
         this.customerName = customerName;
-    }
-
-    public Account() {
-    }
-
-    public Account debit(BigDecimal amount) {
-        BigDecimal newBalance = this.balance.subtract(amount);
-        return new Account(id, accountNumber, activeAccount, newBalance, dailyTransferred.add(amount), customerName);
-    }
-
-    public Account credit(BigDecimal amount) {
-        BigDecimal newBalance = this.balance.add(amount);
-        return new Account(id, accountNumber, activeAccount, newBalance, dailyTransferred, customerName);
+        this.lastDailyReset = lastDailyReset;
     }
 
     public UUID getId() {
@@ -95,21 +101,5 @@ public class Account {
 
     public void setLastDailyReset(LocalDate lastDailyReset) {
         this.lastDailyReset = lastDailyReset;
-    }
-
-    @Override
-    public String toString() {
-        return "Account{" +
-                "id=" + id +
-                ", accountNumber='" + accountNumber + '\'' +
-                ", activeAccount=" + activeAccount +
-                ", balance=" + balance +
-                ", dailyTransferred=" + dailyTransferred +
-                ", customerName='" + customerName + '\'' +
-                ", lastDailyReset=" + lastDailyReset +
-                '}';
-    }
-
-    public void applyDailyReset() {
     }
 }

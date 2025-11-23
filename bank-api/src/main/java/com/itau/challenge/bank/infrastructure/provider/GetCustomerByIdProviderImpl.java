@@ -4,6 +4,7 @@ import com.itau.challenge.bank.application.dto.CostumersResponseDTO;
 import com.itau.challenge.bank.domain.entity.Account;
 import com.itau.challenge.bank.domain.provider.GetCustomerByIdProvider;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -23,15 +24,25 @@ public class GetCustomerByIdProviderImpl implements GetCustomerByIdProvider {
     }
 
     @Override
+    @Cacheable(value = "customers", key = "#id")
     public Account getCustomerById(String id) {
-        String url = this.host + this.path;
+
+        String url = host + path;
         url = url.replace("{customer_id}", id);
+
         CostumersResponseDTO result = webClient.get()
                 .uri(url)
                 .retrieve()
                 .bodyToMono(CostumersResponseDTO.class)
                 .block();
 
-        return new Account(null, null, result.activeAccount(), null, null, result.name());
+        return new Account(
+                null,
+                null,
+                result.activeAccount(),
+                null,
+                null,
+                result.name()
+        );
     }
 }

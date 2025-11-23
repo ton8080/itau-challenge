@@ -1,22 +1,101 @@
-version: "3.8"
+version: "3.9"
 
 services:
   cadastro-mock:
     build: ./mocks/cadastro-mock
-    ports:
-      - "8001:8001"
+    ports: ["8001:8001"]
+    networks: [itau-net]
 
   bacen-mock:
     build: ./mocks/bacen-mock
-    ports:
-      - "8002:8002"
+    ports: ["8002:8002"]
+    networks: [itau-net]
 
-#  bank-api:
-#    build: ./bank-api
-#    ports:
-#      - "8003:8003"
-#    environment:
-#      - JAVA_TOOL_OPTIONS=-Xmx512m
-#    depends_on:
-#      - cadastro-mock
-#      - bacen-mock
+  redis:
+    image: redis:7.2
+    ports: ["6379:6379"]
+    networks: [itau-net]
+
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: itau
+      POSTGRES_PASSWORD: itau
+      POSTGRES_DB: bankdb
+    ports: ["5432:5432"]
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d
+    networks: [itau-net]
+
+
+  localstack:
+    image: localstack/localstack:3
+    environment:
+      - SERVICES=sqs,s3
+      - DEBUG=1
+    ports:
+      - "4566:4566"
+    networks: [itau-net]
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:4566/health | grep '\"sqs\": \"running\"'"]
+      interval: 5s
+      retries: 20
+      timeout: 5s
+    volumes:
+      - ./localstack/init:/etc/localstack/init/ready.d
+
+  bank-api-1:
+    build: ./bank-api
+    environment:
+      SPRING_PROFILES_ACTIVE: local
+    networks: [itau-net]
+    depends_on:
+      - cadastro-mock
+      - bacen-mock
+      - redis
+      - postgres
+      - localstack
+
+  bank-api-2:
+    build: ./bank-api
+    environment:
+      SPRING_PROFILES_ACTIVE: local
+    networks: [itau-net]
+    depends_on:
+      - cadastro-mock
+      - bacen-mock
+      - redis
+      - postgres
+      - localstack
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8003:80"  # Porta externa que você acessa
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    networks: [itau-net]
+    depends_on:
+      - bank-api-1
+      - bank-api-2
+
+  db-reset:
+    build: ./db-reset
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: bankdb
+      DB_USER: itau
+      DB_PASSWORD: itau
+    networks: [itau-net]
+    depends_on:
+      - postgres
+
+
+volumes:
+  pgdata:
+
+networks:
+  itau-net:
+    driver: bridge

@@ -3,13 +3,90 @@ server:
   servlet:
     context-path: /bank-api
 
+bank:
+  daily-limit: 1000
+
 spring:
+  cloud:
+    aws:
+      region:
+        static: sa-east-1
+      sqs:
+        endpoint: http://localstack:4566
+
+
   application:
     name: bank-api
 
+  datasource:
+    url: jdbc:postgresql://postgres:5432/bankdb
+    username: itau
+    password: itau
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 50
+      minimum-idle: 10
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+
+    properties:
+      hibernate:
+        id:
+          new_generator_mappings: true
+        format_sql: false
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+
+  cache:
+    type: redis
+
+  data:
+    redis:
+      port: 6379
+      host: redis
+      timeout: 2s
+
+aws:
+  sqs:
+    queue-name: bacen-notification-queue
 
 cadastro:
-    api:
-      path:
-        customerById: /customer/{customer_id}
-      host: http://localhost:8001
+  api:
+    path:
+      customerById: /customer/{customer_id}
+    host: http://cadastro-mock:8001
+
+bacen:
+  api:
+    host: http://bacen-mock:8002
+
+resilience4j:
+  retry:
+    instances:
+      bacenRetry:
+        max-attempts: 3
+        wait-duration: 200ms
+  circuitbreaker:
+    instances:
+      bacenCircuitBreaker:
+        sliding-window-type: COUNT_BASED
+        sliding-window-size: 10
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10s
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: prometheus,health,info
+  endpoint:
+    prometheus:
+      enabled: true
+  server:
+    port: 8003
+
+
+
