@@ -21,10 +21,10 @@ public class TransferService {
     }
 
     public TransferResponseDTO transfer(TransferRequestDTO request) {
-        return Stream.of(request)
+        return Stream.ofNullable(request)
                 .map(r -> transferUseCase.execute(r.fromAccountId(), r.amount(), r.toAccountNumber()))
                 .map(transferMapper::toDto)
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() -> new RuntimeException("Failed to map transfer to DTO"));
     }
 }

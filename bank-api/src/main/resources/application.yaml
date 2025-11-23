@@ -10,25 +10,25 @@ spring:
   cloud:
     aws:
       region:
-        static: sa-east-1
+        static: ${AWS_REGION:sa-east-1}
       sqs:
-        endpoint: http://localstack:4566
+        endpoint: ${SQS_ENDPOINT:http://localhost:4566}
 
 
   application:
     name: bank-api
 
   datasource:
-    url: jdbc:postgresql://postgres:5432/bankdb
-    username: itau
-    password: itau
+    url: jdbc:postgresql:${DB_URL://localhost:5432/bankdb}
+    username: ${DB_USER:itau}
+    password: ${DB_PASS:itau}
     driver-class-name: org.postgresql.Driver
     hikari:
-      maximum-pool-size: 50
-      minimum-idle: 10
-      connection-timeout: 30000
-      idle-timeout: 600000
-      max-lifetime: 1800000
+      maximum-pool-size: ${MAX_POOL_SIZE:50}
+      minimum-idle: ${MAX_IDLE:10}
+      connection-timeout: ${CONN_TIMEOUT:30000}
+      idle-timeout: ${IDLE_TIMEOUT:600000}
+      max-lifetime: ${MAX_LIFE_TIME:1800000}
 
     properties:
       hibernate:
@@ -44,23 +44,23 @@ spring:
 
   data:
     redis:
-      port: 6379
-      host: redis
-      timeout: 2s
+      port: ${REDIS_PORT:6379}
+      host: ${REDIS_HOST:localhost}
+      timeout: ${REDIS_TIMEOUT:2000}
 
 aws:
   sqs:
-    queue-name: bacen-notification-queue
+    queue-name: ${SQS_BACEN_QUEUE_NAM:bacen-notification-queue}
 
 cadastro:
   api:
     path:
       customerById: /customer/{customer_id}
-    host: http://cadastro-mock:8001
+    host: ${CADASTRO_HOST:http://localhost:8001}
 
 bacen:
   api:
-    host: http://bacen-mock:8002
+    host: ${BACEN_HOST:http://localhost:8002}
 
 resilience4j:
   retry:

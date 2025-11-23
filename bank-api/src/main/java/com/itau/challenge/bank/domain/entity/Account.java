@@ -110,6 +110,4 @@ public class Account {
                 '}';
     }
 
-    public void applyDailyReset() {
-    }
 }

@@ -5,7 +5,6 @@ import com.itau.challenge.bank.domain.provider.FindByAccountNumberProvider;
 import com.itau.challenge.bank.infrastructure.mapper.AccountMapper;
 import com.itau.challenge.bank.infrastructure.persistence.repository.AccountRepository;
 
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
