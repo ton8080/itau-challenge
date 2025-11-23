@@ -4,6 +4,6 @@ import com.itau.challenge.bank.domain.entity.Account;
 
 import java.util.Optional;
 
-public interface FindByIdAccountProvider {
+public interface FindAccountByIdProvider {
     Optional<Account> findByIdForUpdate(String accountId);
 }

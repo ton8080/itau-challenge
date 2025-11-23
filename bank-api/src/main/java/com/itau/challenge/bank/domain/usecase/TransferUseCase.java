@@ -16,7 +16,7 @@ public class TransferUseCase {
 
     private final GetCustomerByIdProvider getCustomerByIdProvider;
     private final SaveAccountProvider saveAccountProvider;
-    private final FindByIdAccountProvider findByIdAccountProvider;
+    private final FindAccountByIdProvider findAccountByIdProvider;
     private final FindByAccountNumberProvider findByAccountNumberProvider;
     private final BacenNotifierProvider bacenNotifier;
     private final DailyLimitProvider dailyLimitProvider;
@@ -24,13 +24,13 @@ public class TransferUseCase {
 
     public TransferUseCase(GetCustomerByIdProvider getCustomerByIdProvider,
                            SaveAccountProvider saveAccountProvider,
-                           FindByIdAccountProvider findByIdAccountProvider,
+                           FindAccountByIdProvider findAccountByIdProvider,
                            FindByAccountNumberProvider findByAccountNumberProvider,
                            BacenNotifierProvider bacenNotifier, DailyLimitProvider dailyLimitProvider) {
 
         this.getCustomerByIdProvider = getCustomerByIdProvider;
         this.saveAccountProvider = saveAccountProvider;
-        this.findByIdAccountProvider = findByIdAccountProvider;
+        this.findAccountByIdProvider = findAccountByIdProvider;
         this.findByAccountNumberProvider = findByAccountNumberProvider;
         this.bacenNotifier = bacenNotifier;
         this.dailyLimitProvider = dailyLimitProvider;
@@ -56,7 +56,7 @@ public class TransferUseCase {
             throw new AccountNotFoundException(accountId);
         }
 
-        Account from = findByIdAccountProvider.findByIdForUpdate(accountId)
+        Account from = findAccountByIdProvider.findByIdForUpdate(accountId)
                 .orElseThrow(() -> new AccountNotFoundException(accountId));
 
         from.setCustomerName(customer.getCustomerName());

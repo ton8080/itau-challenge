@@ -1,7 +1,6 @@
 package com.itau.challenge.bank.domain.entity;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.UUID;
 
 public class Account {
@@ -12,7 +11,6 @@ public class Account {
     private BigDecimal balance;
     private BigDecimal dailyTransferred;
     private String customerName;
-    private LocalDate lastDailyReset;
 
     public Account(UUID id,
                    String accountNumber,
@@ -89,14 +87,6 @@ public class Account {
         this.customerName = customerName;
     }
 
-    public LocalDate getLastDailyReset() {
-        return lastDailyReset;
-    }
-
-    public void setLastDailyReset(LocalDate lastDailyReset) {
-        this.lastDailyReset = lastDailyReset;
-    }
-
     @Override
     public String toString() {
         return "Account{" +
@@ -106,10 +96,6 @@ public class Account {
                 ", balance=" + balance +
                 ", dailyTransferred=" + dailyTransferred +
                 ", customerName='" + customerName + '\'' +
-                ", lastDailyReset=" + lastDailyReset +
                 '}';
-    }
-
-    public void applyDailyReset() {
     }
 }
