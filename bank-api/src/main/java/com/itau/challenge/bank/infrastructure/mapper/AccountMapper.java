@@ -20,6 +20,8 @@ public class AccountMapper {
         account.setBalance(accountModel.getBalance() == null ? BigDecimal.ZERO : accountModel.getBalance());
         account.setDailyTransferred(accountModel.getDailyTransferred() == null ? BigDecimal.ZERO : accountModel.getDailyTransferred());
         account.setCustomerName(accountModel.getCustomerName());
+        account.setLastDailyReset(accountModel.getLastDailyReset());
+
         return account;
     }
 
@@ -33,6 +35,8 @@ public class AccountMapper {
         model.setBalance(account.getBalance() == null ? BigDecimal.ZERO : account.getBalance());
         model.setDailyTransferred(account.getDailyTransferred() == null ? BigDecimal.ZERO : account.getDailyTransferred());
         model.setCustomerName(account.getCustomerName());
+        model.setLastDailyReset(account.getLastDailyReset() == null ? LocalDate.now() : account.getLastDailyReset());
+
         return model;
     }
 }
