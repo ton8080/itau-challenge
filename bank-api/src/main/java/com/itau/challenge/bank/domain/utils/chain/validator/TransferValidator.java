@@ -1,4 +1,4 @@
-package com.itau.challenge.bank.domain.utils.validator;
+package com.itau.challenge.bank.domain.utils.chain.validator;
 
 import com.itau.challenge.bank.domain.entity.Account;
 

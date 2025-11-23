@@ -2,7 +2,6 @@ package com.itau.challenge.bank.infrastructure.persistence.model;
 
 
 import jakarta.persistence.*;
-import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
