@@ -36,7 +36,7 @@ class CustomerValidatorTest {
     void returnsOkWhenCustomerNamePresentAndNoNext() {
         CustomerValidator validator = new CustomerValidator();
 
-        Account acc = new Account(UUID.randomUUID(), "acc-num", true, BigDecimal.ZERO, BigDecimal.ZERO, "Joao");
+        Account acc = new Account(UUID.randomUUID(), "acc-num", true, BigDecimal.ZERO, BigDecimal.ZERO, "Joao Silva");
 
         ValidationResult result = validator.validate(acc, new BigDecimal("1.00"));
 
@@ -49,7 +49,7 @@ class CustomerValidatorTest {
         CustomerValidator validator = new CustomerValidator();
         validator.setNext(next);
 
-        Account acc = new Account(UUID.randomUUID(), "acc-num", true, BigDecimal.ZERO, BigDecimal.ZERO, "Joao");
+        Account acc = new Account(UUID.randomUUID(), "acc-num", true, BigDecimal.ZERO, BigDecimal.ZERO, "Joao Silva");
         BigDecimal amount = new BigDecimal("5.00");
 
         when(next.validate(acc, amount)).thenReturn(ValidationResult.fail("next failed"));
@@ -66,7 +66,7 @@ class CustomerValidatorTest {
         CustomerValidator validator = new CustomerValidator();
         validator.setNext(next);
 
-        Account acc = new Account(UUID.randomUUID(), "acc-num", true, BigDecimal.ZERO, BigDecimal.ZERO, "Joao");
+        Account acc = new Account(UUID.randomUUID(), "acc-num", true, BigDecimal.ZERO, BigDecimal.ZERO, "Joao Silva");
         BigDecimal amount = new BigDecimal("2.00");
 
         when(next.validate(acc, amount)).thenReturn(ValidationResult.ok());

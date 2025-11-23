@@ -25,7 +25,7 @@ class AccountAppMapperTest {
         BigDecimal daily = new BigDecimal("250.00");
         when(account.getBalance()).thenReturn(balance);
         when(account.getDailyTransferred()).thenReturn(daily);
-        when(account.getCustomerName()).thenReturn("João Silva");
+        when(account.getCustomerName()).thenReturn("Joao Silva");
 
         CheckAccountResponseDTO dto = mapper.toDto(account);
 
@@ -34,7 +34,7 @@ class AccountAppMapperTest {
         assertTrue(dto.activeAccount());
         assertEquals(balance, dto.balance());
         assertEquals(daily, dto.dailyTransferred());
-        assertEquals("João Silva", dto.customerName());
+        assertEquals("Joao Silva", dto.customerName());
     }
 
     @Test

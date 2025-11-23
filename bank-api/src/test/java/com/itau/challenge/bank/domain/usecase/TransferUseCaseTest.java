@@ -71,10 +71,10 @@ class TransferUseCaseTest {
         String targetAccountNumber = "dest-1";
         BigDecimal amount = new BigDecimal("10.00");
 
-        Account from = new Account(UUID.randomUUID(), "src-1", true, new BigDecimal("100.00"), BigDecimal.ZERO, "C");
-        Account to = new Account(UUID.randomUUID(), targetAccountNumber, true, new BigDecimal("0.00"), BigDecimal.ZERO, "D");
+        Account from = new Account(UUID.randomUUID(), "src-1", true, new BigDecimal("100.00"), BigDecimal.ZERO, "Joao Silva");
+        Account to = new Account(UUID.randomUUID(), targetAccountNumber, true, new BigDecimal("0.00"), BigDecimal.ZERO, "Maria Silva");
 
-        Account customer = new Account(UUID.randomUUID(), "cust-1", true, BigDecimal.ZERO, BigDecimal.ZERO, "C");
+        Account customer = new Account(UUID.randomUUID(), "cust-1", true, BigDecimal.ZERO, BigDecimal.ZERO, "Joao Silva");
         customer.setCustomerName("John Doe");
         customer.setActiveAccount(true);
 
@@ -97,11 +97,10 @@ class TransferUseCaseTest {
         String targetAccountNumber = "dest-2";
         BigDecimal amount = new BigDecimal("20.00");
 
-        Account from = new Account(UUID.randomUUID(), "src-2", true, new BigDecimal("200.00"), BigDecimal.ZERO, "C");
-        Account to = new Account(UUID.randomUUID(), targetAccountNumber, true, new BigDecimal("0.00"), BigDecimal.ZERO, "D");
+        Account from = new Account(UUID.randomUUID(), "src-2", true, new BigDecimal("200.00"), BigDecimal.ZERO, "Joao Silva");
+        Account to = new Account(UUID.randomUUID(), targetAccountNumber, true, new BigDecimal("0.00"), BigDecimal.ZERO, "Maria Silva");
 
-        Account customer = new Account(UUID.randomUUID(), "cust-2", true, BigDecimal.ZERO, BigDecimal.ZERO, "C");
-        customer.setCustomerName("Jane Doe");
+        Account customer = new Account(UUID.randomUUID(), "cust-2", true, BigDecimal.ZERO, BigDecimal.ZERO, "Joao Silva");
         customer.setActiveAccount(true);
 
         when(findAccountByIdProvider.findByIdForUpdate(accountId)).thenReturn(Optional.of(from));
@@ -122,11 +121,9 @@ class TransferUseCaseTest {
         String accountId = "acc-3";
         BigDecimal amount = new BigDecimal("10.00");
 
-        Account from = new Account(UUID.randomUUID(), "src-3", true, new BigDecimal("5.00"), BigDecimal.ZERO, "C");
+        Account from = new Account(UUID.randomUUID(), "src-3", true, new BigDecimal("5.00"), BigDecimal.ZERO, "Joao Silva");
 
-        Account customer = new Account(UUID.randomUUID(), "cust-3", true, BigDecimal.ZERO, BigDecimal.ZERO, "C");
-        customer.setCustomerName("Client");
-        customer.setActiveAccount(true);
+        Account customer = new Account(UUID.randomUUID(), "cust-3", true, BigDecimal.ZERO, BigDecimal.ZERO, "Joao Silva");
 
         when(findAccountByIdProvider.findByIdForUpdate(accountId)).thenReturn(Optional.of(from));
         when(getCustomerByIdProvider.getCustomerById(accountId)).thenReturn(customer);
@@ -150,11 +147,10 @@ class TransferUseCaseTest {
     @Test
     void execute_invalidAmount_throwsInvalidAmountException() {
         String accountId = "acc-4";
-        BigDecimal amount = BigDecimal.ZERO; // invalid amount per AmountValidator
+        BigDecimal amount = BigDecimal.ZERO;
 
-        Account from = new Account(UUID.randomUUID(), "src-4", true, new BigDecimal("50.00"), BigDecimal.ZERO, "C");
-        Account customer = new Account(UUID.randomUUID(), "cust-4", true, BigDecimal.ZERO, BigDecimal.ZERO, "C");
-        customer.setCustomerName("Client");
+        Account from = new Account(UUID.randomUUID(), "src-4", true, new BigDecimal("50.00"), BigDecimal.ZERO, "Joao Silva");
+        Account customer = new Account(UUID.randomUUID(), "cust-4", true, BigDecimal.ZERO, BigDecimal.ZERO, "Joao Silva");
         customer.setActiveAccount(true);
 
         when(findAccountByIdProvider.findByIdForUpdate(accountId)).thenReturn(Optional.of(from));

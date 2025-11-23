@@ -12,13 +12,14 @@ public class SqsConfig {
 
     @Value("${spring.cloud.aws.sqs.endpoint}")
     private String sqsEndpoint;
+    @Value("${spring.cloud.aws.region.static}")
+    private String region;
 
     @Bean
     public SqsAsyncClient sqsAsyncClient() {
         return SqsAsyncClient.builder()
-                // se estiver usando LocalStack ou endpoint customizado
                 .endpointOverride(URI.create(sqsEndpoint))
-                .region(software.amazon.awssdk.regions.Region.of("sa-east-1"))
+                .region(software.amazon.awssdk.regions.Region.of(region))
                 .build();
     }
 

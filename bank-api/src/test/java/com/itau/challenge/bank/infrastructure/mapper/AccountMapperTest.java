@@ -28,7 +28,7 @@ class AccountMapperTest {
         model.setActiveAccount(true);
         model.setBalance(null);
         model.setDailyTransferred(null);
-        model.setCustomerName("Cliente");
+        model.setCustomerName("Joao Silva");
         LocalDate lastReset = LocalDate.of(2025, 1, 1);
         model.setLastDailyReset(lastReset);
 
@@ -40,7 +40,7 @@ class AccountMapperTest {
         assertTrue(domain.isActiveAccount());
         assertEquals(0, domain.getBalance().compareTo(BigDecimal.ZERO));
         assertEquals(0, domain.getDailyTransferred().compareTo(BigDecimal.ZERO));
-        assertEquals("Cliente", domain.getCustomerName());
+        assertEquals("Joao Silva", domain.getCustomerName());
         assertEquals(lastReset, domain.getLastDailyReset());
     }
 
@@ -58,7 +58,7 @@ class AccountMapperTest {
         account.setActiveAccount(false);
         account.setBalance(null);
         account.setDailyTransferred(null);
-        account.setCustomerName("Outro Cliente");
+        account.setCustomerName("Maria Silva");
         account.setLastDailyReset(null);
 
         AccountModel model = mapper.toModel(account);
@@ -69,7 +69,7 @@ class AccountMapperTest {
         assertFalse(model.isActiveAccount());
         assertEquals(0, model.getBalance().compareTo(BigDecimal.ZERO));
         assertEquals(0, model.getDailyTransferred().compareTo(BigDecimal.ZERO));
-        assertEquals("Outro Cliente", model.getCustomerName());
+        assertEquals("Maria Silva", model.getCustomerName());
         assertNotNull(model.getLastDailyReset());
         assertEquals(LocalDate.now(), model.getLastDailyReset());
     }

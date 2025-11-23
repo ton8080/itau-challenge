@@ -4,9 +4,9 @@ import com.itau.challenge.bank.domain.entity.Account;
 import com.itau.challenge.bank.infrastructure.mapper.AccountMapper;
 import com.itau.challenge.bank.infrastructure.persistence.model.AccountModel;
 import com.itau.challenge.bank.infrastructure.persistence.repository.AccountRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -25,12 +25,9 @@ class FindAccountByIdProviderImplTest {
     @Mock
     private AccountMapper accountMapper;
 
+    @InjectMocks
     private FindAccountByIdProviderImpl provider;
 
-    @BeforeEach
-    void setUp() {
-        provider = new FindAccountByIdProviderImpl(repository, accountMapper);
-    }
 
     @Test
     void findByIdForUpdate_whenFound_returnsMappedAccount() {

@@ -24,7 +24,7 @@ class ActiveValidatorTest {
     @Test
     void validate_activeAccount_withoutNext_returnsOk() {
         ActiveValidator validator = new ActiveValidator();
-        Account acc = new Account(UUID.randomUUID(), "acc-1", true, new BigDecimal("100.00"), BigDecimal.ZERO, "Cliente");
+        Account acc = new Account(UUID.randomUUID(), "acc-1", true, new BigDecimal("100.00"), BigDecimal.ZERO, "Joao Silva");
 
         ValidationResult result = validator.validate(acc, new BigDecimal("10.00"));
 
@@ -34,7 +34,7 @@ class ActiveValidatorTest {
     @Test
     void validate_inactiveAccount_returnsFailWithMessage() {
         ActiveValidator validator = new ActiveValidator();
-        Account acc = new Account(UUID.randomUUID(), "acc-2", false, new BigDecimal("50.00"), BigDecimal.ZERO, "Cliente");
+        Account acc = new Account(UUID.randomUUID(), "acc-2", false, new BigDecimal("50.00"), BigDecimal.ZERO, "Joao Silva");
 
         ValidationResult result = validator.validate(acc, new BigDecimal("5.00"));
 
@@ -47,7 +47,7 @@ class ActiveValidatorTest {
         ActiveValidator validator = new ActiveValidator();
         validator.setNext(next);
 
-        Account acc = new Account(UUID.randomUUID(), "acc-3", true, new BigDecimal("100.00"), BigDecimal.ZERO, "Cliente");
+        Account acc = new Account(UUID.randomUUID(), "acc-3", true, new BigDecimal("100.00"), BigDecimal.ZERO, "Joao Silva");
         ValidationResult nextResult = ValidationResult.fail("next failed");
         when(next.validate(acc, new BigDecimal("1.00"))).thenReturn(nextResult);
 
@@ -62,7 +62,7 @@ class ActiveValidatorTest {
         ActiveValidator validator = new ActiveValidator();
         validator.setNext(next);
 
-        Account acc = new Account(UUID.randomUUID(), "acc-4", true, new BigDecimal("200.00"), BigDecimal.ZERO, "Cliente");
+        Account acc = new Account(UUID.randomUUID(), "acc-4", true, new BigDecimal("200.00"), BigDecimal.ZERO, "Joao Silva");
         ValidationResult nextResult = ValidationResult.ok();
         when(next.validate(acc, new BigDecimal("2.00"))).thenReturn(nextResult);
 

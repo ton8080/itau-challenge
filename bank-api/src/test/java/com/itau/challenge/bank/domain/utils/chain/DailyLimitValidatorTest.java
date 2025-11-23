@@ -58,7 +58,7 @@ class DailyLimitValidatorTest {
         Account acc = mock(Account.class);
         when(acc.getDailyTransferred()).thenReturn(new BigDecimal("900"));
         BigDecimal limit = new BigDecimal("1000");
-        BigDecimal amount = new BigDecimal("200"); // projected = 1100 -> exceeds by 100
+        BigDecimal amount = new BigDecimal("200");
         DailyLimitValidator validator = new DailyLimitValidator(limit);
 
         ValidationResult result = validator.validate(acc, amount);
@@ -66,8 +66,8 @@ class DailyLimitValidatorTest {
         String msg = result.getMessage();
         assertNotNull(msg);
         assertTrue(msg.contains("Daily transfer limit exceeded"));
-        assertTrue(msg.contains(new BigDecimal("100").toPlainString())); // exceeded by
-        assertTrue(msg.contains(new BigDecimal("100").toPlainString()) || msg.contains("Remaining 0")); // remaining may show 100 or 0 depending calculation guard
+        assertTrue(msg.contains(new BigDecimal("100").toPlainString()));
+        assertTrue(msg.contains(new BigDecimal("100").toPlainString()) || msg.contains("Remaining 0"));
     }
 
     @Test

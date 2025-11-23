@@ -24,7 +24,7 @@ class BalanceValidatorTest {
     @Test
     void validate_insufficientBalance_returnsFail() {
         BalanceValidator validator = new BalanceValidator();
-        Account acc = new Account(UUID.randomUUID(), "acc-1", true, new BigDecimal("5.00"), BigDecimal.ZERO, "Cliente");
+        Account acc = new Account(UUID.randomUUID(), "acc-1", true, new BigDecimal("5.00"), BigDecimal.ZERO, "Joao Silva");
 
         ValidationResult result = validator.validate(acc, new BigDecimal("10.00"));
 
@@ -35,7 +35,7 @@ class BalanceValidatorTest {
     @Test
     void validate_sufficientBalance_withoutNext_returnsOk() {
         BalanceValidator validator = new BalanceValidator();
-        Account acc = new Account(UUID.randomUUID(), "acc-2", true, new BigDecimal("20.00"), BigDecimal.ZERO, "Cliente");
+        Account acc = new Account(UUID.randomUUID(), "acc-2", true, new BigDecimal("20.00"), BigDecimal.ZERO, "Joao Silva");
 
         ValidationResult result = validator.validate(acc, new BigDecimal("10.00"));
 
@@ -47,7 +47,7 @@ class BalanceValidatorTest {
         BalanceValidator validator = new BalanceValidator();
         validator.setNext(next);
 
-        Account acc = new Account(UUID.randomUUID(), "acc-3", true, new BigDecimal("20.00"), BigDecimal.ZERO, "Cliente");
+        Account acc = new Account(UUID.randomUUID(), "acc-3", true, new BigDecimal("20.00"), BigDecimal.ZERO, "Joao Silva");
         ValidationResult nextResult = ValidationResult.fail("next failed");
         when(next.validate(acc, new BigDecimal("10.00"))).thenReturn(nextResult);
 
