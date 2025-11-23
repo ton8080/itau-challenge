@@ -72,7 +72,7 @@ services:
   nginx:
     image: nginx:latest
     ports:
-      - "8003:80"  # Porta externa que você acessa
+      - "8003:80"
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
     networks: [itau-net]

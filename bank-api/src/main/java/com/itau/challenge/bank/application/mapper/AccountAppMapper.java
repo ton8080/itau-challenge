@@ -9,6 +9,7 @@ public class AccountAppMapper {
 
 
     public CheckAccountResponseDTO toDto(Account account) {
+        if (account == null) return null;
         return new CheckAccountResponseDTO(
                 account.getAccountNumber(),
                 account.isActiveAccount(),

@@ -1,4 +1,4 @@
-package com.itau.challenge.bank.infrastructure.sqs;
+package com.itau.challenge.bank.infrastructure.config.sqs;
 
 import io.awspring.cloud.sqs.operations.SqsTemplate;
 import org.springframework.beans.factory.annotation.Value;

@@ -20,9 +20,9 @@ public class AccountService {
     }
 
     public CheckAccountResponseDTO checkAccount(UUID accountId) {
-        return Stream.of(checkAccountUseCase.checkAccount(accountId.toString()))
+        return Stream.ofNullable(checkAccountUseCase.checkAccount(accountId.toString()))
                 .map(accountAppMapper::toDto)
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() -> new RuntimeException("Failed to map account to DTO"));
     }
 }

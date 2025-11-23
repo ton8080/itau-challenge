@@ -37,35 +37,37 @@ public class TransferUseCase {
     }
 
     private TransferValidator buildValidatorChain() {
+        TransferValidator amount = new AmountValidator();
+        TransferValidator customer = new CustomerValidator();
         TransferValidator active = new ActiveValidator();
         TransferValidator daily = new DailyLimitValidator(dailyLimitProvider.getDailyLimit());
         TransferValidator balance = new BalanceValidator();
-        active.setNext(daily).setNext(balance);
-        return active;
+
+        amount.setNext(customer).setNext(active).setNext(daily).setNext(balance);
+        return amount;
     }
 
     public Transfer execute(String accountId, BigDecimal amount, String targetAccountNumber)
             throws AccountNotFoundException {
 
-        if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new InvalidAmountException("Invalid amount");
-        }
-
-        var customer = getCustomerByIdProvider.getCustomerById(accountId);
-        if (customer == null) {
-            throw new AccountNotFoundException(accountId);
-        }
-
         Account from = findAccountByIdProvider.findByIdForUpdate(accountId)
                 .orElseThrow(() -> new AccountNotFoundException(accountId));
 
-        from.setCustomerName(customer.getCustomerName());
-        from.setActiveAccount(customer.isActiveAccount());
+        var customer = getCustomerByIdProvider.getCustomerById(accountId);
+        from.setCustomerName(customer != null ? customer.getCustomerName() : null);
+        from.setActiveAccount(customer != null && customer.isActiveAccount());
 
         TransferValidator chain = buildValidatorChain();
         ValidationResult vr = chain.validate(from, amount);
         if (!vr.isValid()) {
-            throw new ValidationException(vr.getMessage(), from.getBalance());
+            String msg = vr.getMessage();
+            if ("Invalid amount".equals(msg)) {
+                throw new InvalidAmountException("Invalid amount");
+            }
+            if ("Customer not found".equals(msg)) {
+                throw new AccountNotFoundException(accountId);
+            }
+            throw new ValidationException(msg, from.getBalance());
         }
 
         Account to = findByAccountNumberProvider.findByAccountNumberForUpdate(targetAccountNumber)
