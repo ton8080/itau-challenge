@@ -118,7 +118,7 @@ Pontos-chave:
 
 ## Repositories de consulta — queries nativas e FOR UPDATE
 
-Para evitar problemas de concorrencia durante transferências, nas consultas críticas (flow de débito/crédito) foi utilizado queries nativas com FOR UPDATE para obter locks pessimistas nas linhas envolvidas. Exemplo de repositório de consulta:
+Para evitar problemas de concorrencia durante transferências, nas consultas críticas (flow de débito/crédito) foi utilizado queries nativas com FOR UPDATE para obter locks pessimistas nas linhas envolvidas.
 
 ---
 
